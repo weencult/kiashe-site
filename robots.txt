@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /send.php
+Disallow: /config.php
 
 Sitemap: https://kiashe.ru/sitemap.xml
