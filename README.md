@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33357097/README.md)
 <div align="center">
 
 <img src="assets/img/icon-512.png" width="96" alt="Kiashe Studio">
