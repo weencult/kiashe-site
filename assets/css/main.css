@@ -329,9 +329,9 @@ p { margin: 0; }
 	background: #fff;
 	color: var(--canvas);
 }
-.brand__mark .ico { width: 20px; height: 20px; }
+.brand__mark .ico { width: 26px; height: 26px; }
 .brand__name { font-family: var(--f-display); font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
-.brand__name i { font-style: normal; color: var(--blue-hi); }
+.brand__name i { margin-left: 5px; font-style: normal; font-weight: 500; font-size: .74em; letter-spacing: .01em; color: var(--blue-hi); }
 
 .nav__links { display: flex; gap: 4px; margin: 0 auto; }
 .nav__links a {

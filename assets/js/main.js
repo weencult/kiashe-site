@@ -1,12 +1,15 @@
-/* Арсений — сайт-визитка */
+/* Kiashe Studio — сайт-визитка */
 (() => {
 	'use strict';
 
 	const TG = 'https://t.me/weencult';
 	const EMAIL = 'kiashe.cult@gmail.com';
-	const PHONE = '+79607330683';
+	const PHONE = '+79308392105';
 	// ссылка на профиль MAX (Профиль → Поделиться → max.ru/u/…); пока пусто — кнопка копирует номер и открывает MAX
 	const MAX = '';
+	// ключ Web3Forms (web3forms.com, бесплатно): заявки с формы приходят на почту без своего сервера.
+	// Пока пусто — форма шлёт на send.php (если он есть) или открывает Telegram с готовым текстом
+	const FORM_KEY = 'b8a90705-7ad0-4ce5-b5ce-783d55390d42';
 
 	const $ = (s, root = document) => root.querySelector(s);
 	const $$ = (s, root = document) => [...root.querySelectorAll(s)];
@@ -121,7 +124,7 @@
 		const to = +el.dataset.count;
 		const t0 = performance.now();
 		const tick = (t) => {
-			const k = Math.min(1, (t - t0) / 1400);
+			const k = Math.min(1, Math.max(0, (t - t0) / 1400));
 			el.textContent = Math.round(to * (1 - (1 - k) ** 3)).toLocaleString('ru-RU');
 			if (k < 1) requestAnimationFrame(tick);
 		};
@@ -518,6 +521,7 @@
 
 	const form = $('[data-form]');
 	const formMsg = $('[data-form-msg]', form);
+	const submitBtn = $('[type="submit"]', form);
 	const tgMain = $('[data-tg-main]');
 
 	// выбор из примерки и тарифов попадает в текст для Telegram и в заявку
@@ -545,7 +549,7 @@
 		if (link) formMsg.append(' ', Object.assign(document.createElement('a'), { href: link.href, target: '_blank', rel: 'noopener', textContent: link.text }));
 	}
 
-	form.addEventListener('submit', (e) => {
+	form.addEventListener('submit', async (e) => {
 		e.preventDefault();
 		const f = form.elements;
 		const bad = ['name', 'contact', 'consent'].filter((k) => {
@@ -560,13 +564,47 @@
 			return;
 		}
 
-		// сайт статический (GitHub Pages) — заявка уходит готовым сообщением в Telegram
 		const text = `${tgText()}\nМеня зовут: ${f.name.value.trim()}\nКонтакт: ${f.contact.value.trim()}`;
-		const href = `${TG}?text=${encodeURIComponent(text)}`;
-		// без 'noopener' в параметрах: с ним window.open всегда возвращает null
-		const win = window.open(href, '_blank');
-		if (win) win.opener = null;
-		say(win === null ? 'Браузер не дал открыть Telegram.' : 'Открыл Telegram — нажмите «Отправить», и заявка у меня.', win !== null, { href, text: win === null ? 'Открыть Telegram →' : 'Не открылся? Нажмите сюда →' });
+		const tgLink = `${TG}?text=${encodeURIComponent(text)}`;
+
+		// без сервера и ключа (например, GitHub Pages) — сразу Telegram с готовым текстом
+		if (!FORM_KEY && !form.getAttribute('action')) {
+			open(tgLink, '_blank', 'noopener');
+			copy(text);
+			say('Открываю Telegram — текст заявки уже набран, осталось нажать «Отправить».', true);
+			return;
+		}
+
+		submitBtn.disabled = true;
+		say('Отправляю…', true);
+		try {
+			const res = FORM_KEY
+				? await fetch('https://api.web3forms.com/submit', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+					body: JSON.stringify({
+						access_key: FORM_KEY,
+						subject: `Заявка с сайта Kiashe Studio — ${f.name.value.trim()}`,
+						from_name: 'Kiashe Studio',
+						'Имя': f.name.value.trim(),
+						'Контакт': f.contact.value.trim(),
+						'Бизнес': f.biz.value || 'не указан',
+						'Тариф': f.plan.value || 'Пока не знаю',
+						botcheck: f.website.value
+					})
+				})
+				: await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+			const data = await res.json();
+			if (!(data.ok || data.success)) throw new Error(data.error || data.message);
+			f.name.value = f.contact.value = '';
+			f.consent.checked = false;
+			say('Заявка у меня! Отвечу в течение 15 минут в рабочее время (9:00–21:00 МСК).', true);
+		} catch {
+			// отправка не удалась — не теряем клиента: тот же текст можно отправить в Telegram
+			say('Не получилось отправить напрямую.', false, { href: tgLink, text: 'Отправить в Telegram →' });
+		} finally {
+			submitBtn.disabled = false;
+		}
 	});
 
 	$$('input', form).forEach((i) => i.addEventListener(i.type === 'checkbox' ? 'change' : 'input', () => i.closest('.field')?.classList.remove('is-error')));
