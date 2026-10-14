@@ -5,7 +5,7 @@
 # Kiashe Studio
 
 **Сайты, которые продают** — визитки, лендинги и многостраничные сайты для малого бизнеса.<br>
-Визитка за 1 день от 1 999 ₽ · Нижний Новгород и удалённо по всей России
+Визитка за 1 день от 4 990 ₽ · Нижний Новгород и удалённо по всей России
 
 [![Сайт](https://img.shields.io/badge/kiashe.ru-открыть_сайт-1c6cff?style=for-the-badge)](https://kiashe.ru)
 [![Telegram](https://img.shields.io/badge/Telegram-@weencult-2aabee?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/weencult)

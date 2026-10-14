@@ -1014,6 +1014,16 @@ p { margin: 0; }
 .plan__price small { font-size: 18px; font-weight: 500; letter-spacing: 0; color: var(--mist); }
 .plan__price span { font-size: 34px; color: var(--mist); }
 .plan__term { margin-top: 10px; font-size: 14px; color: var(--mist); }
+.plan__promo {
+	align-self: flex-start;
+	margin-top: 14px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: rgba(0, 204, 75, .12);
+	font-size: 13px;
+	font-weight: 400;
+	color: #5be38c;
+}
 .plan__list {
 	flex: 1;
 	margin: 28px 0 32px;
