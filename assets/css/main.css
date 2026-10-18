@@ -1580,6 +1580,30 @@ p { margin: 0; }
 }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
+/* уведомление о cookie */
+.cookie {
+	position: fixed;
+	left: 20px; bottom: 20px;
+	z-index: 45;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	max-width: 440px;
+	padding: 14px 14px 14px 18px;
+	border: 1px solid rgba(255, 255, 255, .12);
+	border-radius: 18px;
+	background: rgba(1, 13, 30, .94);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .7);
+	font-size: 13px;
+	line-height: 1.45;
+	color: var(--fog);
+}
+.cookie[hidden] { display: none; }
+.cookie a { color: #fff; }
+.cookie .btn { flex-shrink: 0; }
+
 /* ---------- Подвал ---------- */
 
 .footer { padding: 56px 0; border-top: 1px solid var(--steel); background: rgba(0, 8, 20, .7); }
@@ -1853,6 +1877,7 @@ p { margin: 0; }
 	.footer { padding: 48px 0 112px; }
 	.footer__in { grid-template-columns: minmax(0, 1fr); }
 	.toast { bottom: 88px; }
+	.cookie { left: 12px; right: 12px; bottom: 80px; max-width: none; }
 	.dock {
 		position: fixed;
 		left: 12px; right: 12px; bottom: 12px;

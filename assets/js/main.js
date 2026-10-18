@@ -10,6 +10,8 @@
 	// ключ Web3Forms (web3forms.com, бесплатно): заявки с формы приходят на почту без своего сервера.
 	// Пока пусто — форма шлёт на send.php (если он есть) или открывает Telegram с готовым текстом
 	const FORM_KEY = 'b8a90705-7ad0-4ce5-b5ce-783d55390d42';
+	// номер счётчика Яндекс Метрики (код счётчика — в <head>)
+	const YM_ID = 113668402;
 
 	// язык и валюта посетителя (assets/js/i18n.js); L(ru, en) — строка на текущем языке
 	const I18N = window.I18N;
@@ -589,6 +591,7 @@
 		if (!FORM_KEY && !form.getAttribute('action')) {
 			open(tgLink, '_blank', 'noopener');
 			copy(text);
+			goal('form_telegram');
 			say(L('Открываю Telegram — текст заявки уже набран, осталось нажать «Отправить».', 'Opening Telegram — your message is ready, just press “Send”.'), true);
 			return;
 		}
@@ -615,6 +618,7 @@
 				: await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
 			const data = await res.json();
 			if (!(data.ok || data.success)) throw new Error(data.error || data.message);
+			goal('form_sent');
 			f.name.value = f.contact.value = '';
 			f.consent.checked = false;
 			say(L('Заявка у меня! Отвечу в течение 15 минут в рабочее время (9:00–21:00 МСК).', 'Got it! We’ll reply within 15 minutes during working hours (9:00–21:00 Moscow time).'), true);
@@ -627,6 +631,41 @@
 	});
 
 	$$('input', form).forEach((i) => i.addEventListener(i.type === 'checkbox' ? 'change' : 'input', () => i.closest('.field')?.classList.remove('is-error')));
+
+	/* ---------- Яндекс Метрика: цели по действиям посетителей ---------- */
+
+	const goal = (name, params) => { try { window.ym?.(YM_ID, 'reachGoal', name, params); } catch {} };
+	// порядок важен: срабатывает первое совпадение
+	const GOALS = [
+		['[data-tg-main]', 'telegram'],
+		['[data-audit]', 'free_review'],
+		['[data-try="cta"]', 'tryon_cta'],
+		['[data-plan]', 'plan_select', (el) => ({ plan: el.dataset.plan })],
+		['a[href^="https://t.me"]', 'telegram'],
+		['a[href^="tel:"]', 'phone'],
+		['[data-copy]', 'phone_copy'],
+		['[data-max]', 'max'],
+		['[data-mail]', 'email'],
+		['a[href*="vk.ru"], a[href*="vk.com"]', 'vk'],
+		['a[href="#contact"]', 'order_click']
+	];
+	document.addEventListener('click', (e) => {
+		for (const [sel, name, params] of GOALS) {
+			const el = e.target.closest(sel);
+			if (el) { goal(name, params?.(el)); return; }
+		}
+	}, { capture: true });
+
+	/* ---------- Уведомление о cookie ---------- */
+
+	const cookieBox = $('[data-cookie]');
+	let cookieOk = false;
+	try { cookieOk = !!localStorage.getItem('cookie-ok'); } catch {}
+	if (!cookieOk) setTimeout(() => { cookieBox.hidden = false; }, 1500);
+	$('[data-cookie-ok]').addEventListener('click', () => {
+		cookieBox.hidden = true;
+		try { localStorage.setItem('cookie-ok', '1'); } catch {}
+	});
 
 	/* ---------- Язык и валюта ---------- */
 

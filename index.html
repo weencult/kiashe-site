@@ -24,7 +24,7 @@
 <link rel="preload" href="assets/fonts/inter-tight-cyr.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-tight-lat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/onest-lat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/main.css?v=24">
+<link rel="stylesheet" href="assets/css/main.css?v=25">
 <script>
 document.documentElement.classList.add('js');
 try { if (localStorage.getItem('announce-hidden')) document.documentElement.classList.add('no-announce'); } catch (e) {}
@@ -44,11 +44,22 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 })();
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Kiashe Studio","alternateName":"Кьяше Студио","slogan":"Сайты, которые продают","url":"https://kiashe.ru/","image":"https://kiashe.ru/assets/img/og.jpg","logo":"https://kiashe.ru/assets/img/icon-512.png","description":"Сайты-визитки, лендинги и многостраничные сайты для малого бизнеса: от 1 дня и от 4 990 ₽","telephone":"+79308392105","email":"kiashe.cult@gmail.com","priceRange":"от 4 990 ₽","openingHours":"Mo-Su 09:00-21:00","address":{"@type":"PostalAddress","addressLocality":"Нижний Новгород","addressCountry":"RU"},"areaServed":{"@type":"Country","name":"Россия"},"founder":{"@type":"Person","name":"Акимов Арсений Александрович","jobTitle":"Руководитель проектов"},"taxID":"333411864948","sameAs":["https://t.me/weencult","https://vk.ru/club242401122"]}</script>
-<script src="assets/js/i18n-en.js?v=5" defer></script>
+<!-- Яндекс Метрика -->
+<script>
+(function (m, e, t, r, i, k, a) {
+	m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+	m[i].l = 1 * new Date();
+	for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) return; }
+	k = e.createElement(t); a = e.getElementsByTagName(t)[0]; k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+})(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+ym(113668402, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+</script>
+<script src="assets/js/i18n-en.js?v=6" defer></script>
 <script src="assets/js/i18n.js?v=1" defer></script>
-<script src="assets/js/main.js?v=22" defer></script>
+<script src="assets/js/main.js?v=23" defer></script>
 </head>
 <body>
+<noscript><div><img src="https://mc.yandex.ru/watch/113668402" style="position:absolute;left:-9999px" alt=""></div></noscript>
 <a class="skip" href="#main">К содержимому</a>
 <canvas class="bg-dots" data-bg aria-hidden="true"></canvas>
 
@@ -694,6 +705,10 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 
 <a class="dock" href="#contact" data-dock><svg class="ico"><use href="#i-arrow"/></svg>Заказать сайт</a>
 <div class="toast" data-toast role="status" aria-live="polite"></div>
+<div class="cookie" data-cookie hidden>
+	<p>Мы используем cookie и Яндекс Метрику, чтобы сайт работал лучше. Подробнее — в <a href="privacy.html">политике конфиденциальности</a>.</p>
+	<button class="btn btn--white btn--sm" type="button" data-cookie-ok>Понятно</button>
+</div>
 
 <dialog class="mailbox" data-mailbox aria-labelledby="mailbox-title">
 	<button class="lightbox__btn mailbox__close" type="button" data-mailbox-close aria-label="Закрыть"><svg class="ico"><use href="#i-close"/></svg></button>

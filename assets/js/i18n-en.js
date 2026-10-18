@@ -376,6 +376,8 @@ window.I18N_EN = {
 	"Визитки, лендинги и многостраничные сайты для малого бизнеса — Нижний Новгород и удалённо по всей России. Руководитель проектов — Арсений, на связи с 9:00 до 21:00 МСК.":
 		"Business card sites, landing pages and multi-page websites for small businesses — Nizhny Novgorod and remotely worldwide. Project lead: Arseniy, available 9:00–21:00 Moscow time.",
 	"Политика конфиденциальности": "Privacy policy",
+	"Мы используем cookie и Яндекс Метрику, чтобы сайт работал лучше. Подробнее — в": "We use cookies and Yandex Metrica to make this site better. Learn more in our",
+	"Понятно": "Got it",
 	"Самозанятый Акимов Арсений Александрович, ИНН 333411864948": "Self-employed: Arseniy A. Akimov, TIN 333411864948",
 	"Где написать письмо?": "Where do you want to write?",
 	"Яндекс Почта": "Yandex Mail",
