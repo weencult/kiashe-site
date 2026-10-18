@@ -24,13 +24,29 @@
 <link rel="preload" href="assets/fonts/inter-tight-cyr.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-tight-lat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/onest-lat.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/main.css?v=18">
+<link rel="stylesheet" href="assets/css/main.css?v=24">
 <script>
 document.documentElement.classList.add('js');
 try { if (localStorage.getItem('announce-hidden')) document.documentElement.classList.add('no-announce'); } catch (e) {}
+(function () {
+	var d = document.documentElement, l = null;
+	try { l = localStorage.getItem('lang'); } catch (e) {}
+	if (l !== 'ru' && l !== 'en') {
+		var ls = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'ru']).map(function (x) { return String(x).toLowerCase(); });
+		var main = ls[0].split('-')[0];
+		l = ls.slice(0, 2).some(function (x) { return x.indexOf('ru') === 0; }) || /^(be|kk|ky|uz|tg|hy|az)$/.test(main) ? 'ru' : 'en';
+	}
+	window.__lang = l;
+	if (l !== 'ru') {
+		d.classList.add('i18n-wait');
+		setTimeout(function () { d.classList.remove('i18n-wait'); }, 2500);
+	}
+})();
 </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Kiashe Studio","alternateName":"Кьяше Студио","slogan":"Сайты, которые продают","url":"https://kiashe.ru/","image":"https://kiashe.ru/assets/img/og.jpg","logo":"https://kiashe.ru/assets/img/icon-512.png","description":"Сайты-визитки, лендинги и многостраничные сайты для малого бизнеса: от 1 дня и от 4 990 ₽","telephone":"+79308392105","email":"kiashe.cult@gmail.com","priceRange":"от 4 990 ₽","openingHours":"Mo-Su 09:00-21:00","address":{"@type":"PostalAddress","addressLocality":"Нижний Новгород","addressCountry":"RU"},"areaServed":{"@type":"Country","name":"Россия"},"founder":{"@type":"Person","name":"Арсений","jobTitle":"Руководитель проектов"},"sameAs":["https://t.me/weencult"]}</script>
-<script src="assets/js/main.js?v=20" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Kiashe Studio","alternateName":"Кьяше Студио","slogan":"Сайты, которые продают","url":"https://kiashe.ru/","image":"https://kiashe.ru/assets/img/og.jpg","logo":"https://kiashe.ru/assets/img/icon-512.png","description":"Сайты-визитки, лендинги и многостраничные сайты для малого бизнеса: от 1 дня и от 4 990 ₽","telephone":"+79308392105","email":"kiashe.cult@gmail.com","priceRange":"от 4 990 ₽","openingHours":"Mo-Su 09:00-21:00","address":{"@type":"PostalAddress","addressLocality":"Нижний Новгород","addressCountry":"RU"},"areaServed":{"@type":"Country","name":"Россия"},"founder":{"@type":"Person","name":"Акимов Арсений Александрович","jobTitle":"Руководитель проектов"},"taxID":"333411864948","sameAs":["https://t.me/weencult","https://vk.ru/club242401122"]}</script>
+<script src="assets/js/i18n-en.js?v=5" defer></script>
+<script src="assets/js/i18n.js?v=1" defer></script>
+<script src="assets/js/main.js?v=22" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">К содержимому</a>
@@ -49,6 +65,7 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 	<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
 	<symbol id="i-tg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11l6 2.2M21 4l-3.5 16-6.7-5.2M21 4 9 13.2v5.3l1.8-4.2"/></symbol>
 	<symbol id="i-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5Z"/><path d="M8.5 15V9.5l3.5 3.5 3.5-3.5V15"/></symbol>
+	<symbol id="i-vk" viewBox="0 0 24 24" fill="currentColor"><path d="M3 7h3.1c.3 3.6 1.8 5.8 3 6.2V7h2.9v3.9c1.1-.1 2.5-1.9 2.9-3.9h2.8c-.5 2.5-2.1 4.3-3.2 5 1.1.6 2.9 2.2 3.6 4.9h-3.1c-.6-1.9-2.1-3.3-4-3.5V17h-.4C6.3 17 3.2 13.6 3 7Z"/></symbol>
 	<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></symbol>
 	<symbol id="i-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h3.5l1.5 4.5-2.2 1.4a11 11 0 0 0 5.3 5.3l1.4-2.2L19 13.5V17a2 2 0 0 1-2 2A15 15 0 0 1 3 5a2 2 0 0 1 2-2Z"/></symbol>
 	<symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.9-.6-1.3-.6-2.1 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 7 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></symbol>
@@ -56,6 +73,7 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 	<symbol id="i-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 11h16M4 16h10m3-1 2 2 3-4"/></symbol>
 	<symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5l1.5 3h5L16 13h5M5.5 5h13L21 13v6H3v-6Z"/></symbol>
 	<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.5-4.5"/></symbol>
+	<symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></symbol>
 	<symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 4-2 6 2 0 4.5-.5 6-2m0-4-3-3 3-1c2.5-5 6.5-7.5 12-8-.5 5.5-3 9.5-8 12l-1 3Z"/><circle cx="15" cy="9" r="1.6"/></symbol>
 	<symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h3"/></symbol>
 	<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
@@ -63,7 +81,7 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 </svg>
 
 <div class="announce" data-announce>
-	<a href="#contact">Первым 5 клиентам — визитка со скидкой: 2 990 ₽ вместо 4 990 ₽ в обмен на отзыв <span aria-hidden="true">›</span></a>
+	<a href="#contact">Первым 5 клиентам — визитка со скидкой: <span data-price="2990">2 990 ₽</span> вместо <span data-price="4990">4 990 ₽</span> в обмен на отзыв <span aria-hidden="true">›</span></a>
 	<button class="announce__close" type="button" aria-label="Скрыть объявление" data-announce-close><svg class="ico"><use href="#i-close"/></svg></button>
 </div>
 
@@ -83,6 +101,16 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 			<a class="nav__cta" href="#contact">Заказать сайт</a>
 		</nav>
 		<div class="nav__actions">
+			<div class="locale" data-locale>
+				<button class="locale__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Язык и валюта" data-locale-btn><svg class="ico"><use href="#i-globe"/></svg><span data-locale-label data-i18n-skip>RU · ₽</span></button>
+				<div class="locale__menu" data-locale-menu hidden>
+					<p class="locale__h">Язык</p>
+					<div class="locale__row" data-locale-langs data-i18n-skip></div>
+					<p class="locale__h">Валюта</p>
+					<div class="locale__row" data-locale-curs data-i18n-skip></div>
+					<p class="locale__note" data-locale-note data-i18n-skip></p>
+				</div>
+			</div>
 			<a class="nav__phone" href="tel:+79308392105">+7 930 839-21-05</a>
 			<a class="btn btn--white btn--sm" href="#contact">Заказать сайт</a>
 			<button class="nav__burger" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Открыть меню" data-burger><span></span><span></span></button>
@@ -120,7 +148,7 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 				<a class="btn btn--ghost" href="#works">Смотреть работы</a>
 			</div>
 			<ul class="badges" aria-label="Коротко" data-reveal style="--i:5">
-				<li class="badge"><svg><use href="#laurel"/></svg><span><b>от <i data-count="4990">4 990</i> ₽</b>стоимость</span><svg><use href="#laurel"/></svg></li>
+				<li class="badge"><svg><use href="#laurel"/></svg><span><b>от <span data-price="4990">4 990 ₽</span></b>стоимость</span><svg><use href="#laurel"/></svg></li>
 				<li class="badge"><svg><use href="#laurel"/></svg><span><b>от 1 дня</b>до запуска</span><svg><use href="#laurel"/></svg></li>
 				<li class="badge"><svg><use href="#laurel"/></svg><span><b><i data-count="15">15</i> минут</b>время ответа</span><svg><use href="#laurel"/></svg></li>
 				<li class="badge"><svg><use href="#laurel"/></svg><span><b><i data-count="6">6</i> сайтов</b>в портфолио</span><svg><use href="#laurel"/></svg></li>
@@ -135,6 +163,29 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 			<span>Кофейни</span><span>Юристы</span><span>Мастерские</span><span>Компьютерные клубы</span><span>Производства</span><span>Агентства</span><span>И ваша ниша</span>
 		</div>
 	</div>
+
+	<!-- Проблемы клиента -->
+	<section class="band" id="pains" aria-labelledby="pains-title">
+		<div class="wrap">
+			<div class="sec-head" data-reveal>
+				<p class="kicker">Знакомо?</p>
+				<h2 class="h2" id="pains-title">Почему бизнес теряет клиентов <br class="br-d">в интернете</h2>
+			</div>
+			<div class="pains">
+				<article class="pain card" data-reveal><span class="pain__n">01</span><h3 class="h4">Вас не находят</h3><p class="muted">Клиент ищет «кофейня рядом» и выбирает тех, у кого есть сайт и понятная карточка на Картах. Без них уходят даже те, кто был готов купить.</p><p class="pain__fix"><svg class="ico"><use href="#i-check"/></svg><span><b>Решение:</b> Сайт под вашу нишу и база для Яндекса и Google</span></p></article>
+				<article class="pain card" data-reveal style="--i:1"><span class="pain__n">02</span><h3 class="h4">Соцсети не продают</h3><p class="muted">Лента не отвечает на главные вопросы: сколько стоит, где вы и как записаться. Человек уходит подумать — и не возвращается.</p><p class="pain__fix"><svg class="ico"><use href="#i-check"/></svg><span><b>Решение:</b> Цены, адрес и кнопка записи — на первом экране</span></p></article>
+				<article class="pain card" data-reveal style="--i:2"><span class="pain__n">03</span><h3 class="h4">Сайт есть, а заявок нет</h3><p class="muted">Неудобно с телефона, нет цен, кнопка «Записаться» спрятана — посетитель закрывает вкладку за несколько секунд.</p><p class="pain__fix"><svg class="ico"><use href="#i-check"/></svg><span><b>Решение:</b> Продающая структура и удобство на смартфоне</span></p></article>
+				<article class="pain card" data-reveal style="--i:3"><span class="pain__n">04</span><h3 class="h4">Студия — дорого и долго</h3><p class="muted">Месяц согласований и счёт от <span data-price="50000">50 000 ₽</span>. А фрилансер может пропасть посреди работы.</p><p class="pain__fix"><svg class="ico"><use href="#i-check"/></svg><span><b>Решение:</b> Сайт от 1 дня, цена фиксируется до старта</span></p></article>
+			</div>
+			<div class="audit card card--glow" data-reveal>
+				<div>
+					<p class="audit__title">Бесплатный разбор за 15 минут</p>
+					<p class="muted">Пришлите ссылку на сайт, соцсеть или карточку на Картах — скажу, что мешает получать заявки и что исправить в первую очередь. Даже если сайт вы закажете не у нас.</p>
+				</div>
+				<a class="btn btn--blue btn--icon" href="https://t.me/weencult" target="_blank" rel="noopener" data-audit><span class="btn__ico"><svg class="ico"><use href="#i-arrow"/></svg></span>Получить разбор</a>
+			</div>
+		</div>
+	</section>
 
 	<!-- Работы -->
 	<section class="band band--deep" id="works" aria-labelledby="works-title">
@@ -352,6 +403,20 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 				<p class="kicker">Что входит</p>
 				<h2 class="h2" id="services-title">Не просто красиво — <br class="br-d">сайт, который работает</h2>
 			</div>
+			<div class="crew card" data-reveal>
+				<div>
+					<h3 class="h3">Вместо пяти подрядчиков — одна студия</h3>
+					<p class="muted">Дизайн, тексты, разработка, SEO и аналитика делаются в одном проекте и по цене одного фрилансера. Общаетесь вы с одним человеком — руководителем проекта, без цепочек согласований.</p>
+				</div>
+				<ul class="crew__roles">
+					<li><span aria-hidden="true">🎨</span>Дизайн</li>
+					<li><span aria-hidden="true">✍️</span>Тексты</li>
+					<li><span aria-hidden="true">💻</span>Разработка</li>
+					<li><span aria-hidden="true">🔍</span>SEO</li>
+					<li><span aria-hidden="true">📊</span>Аналитика</li>
+					<li><span aria-hidden="true">🧭</span>Руководитель проекта</li>
+				</ul>
+			</div>
 			<div class="services">
 				<div class="service card" data-reveal><span class="service__ico"><svg class="ico"><use href="#i-palette"/></svg></span><h3 class="h4">Дизайн под вашу нишу</h3><p class="muted">Своя палитра, шрифты и настроение. Кофейня выглядит как кофейня, юрист — как юрист. Никаких одинаковых шаблонов.</p></div>
 				<div class="service card" data-reveal style="--i:1"><span class="service__ico"><svg class="ico"><use href="#i-phone"/></svg></span><h3 class="h4">Идеально на телефоне</h3><p class="muted">Большинство клиентов приходят со смартфона. Каждый блок собираю и проверяю под мобильный экран.</p></div>
@@ -363,19 +428,55 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 		</div>
 	</section>
 
-	<!-- Как работаю -->
+	<!-- Как работаем -->
 	<section class="band" id="process" aria-labelledby="process-title">
 		<div class="wrap">
 			<div class="sec-head" data-reveal>
-				<p class="kicker">Как работаю</p>
-				<h2 class="h2" id="process-title">От сообщения до готового сайта — четыре шага</h2>
+				<p class="kicker">Как работаем</p>
+				<h2 class="h2" id="process-title">Как идея превращается в заявки</h2>
+				<p class="lead">Пять понятных шагов. На каждом вы знаете, что мы делаем, что получаете вы и сколько это займёт.</p>
 			</div>
-			<ol class="steps" data-steps>
-				<li class="step card" data-reveal><span class="step__n">01</span><h3 class="h4">Пишете мне</h3><p class="muted">В Telegram, MAX, на почту или через заявку на сайте. Достаточно пары слов о бизнесе.</p><span class="step__time">5 минут</span></li>
-				<li class="step card" data-reveal style="--i:1"><span class="step__n">02</span><h3 class="h4">Бриф и предоплата</h3><p class="muted">Уточняю услуги, контакты и примеры, которые нравятся. Фиксирую цену и срок — вы вносите 50%.</p><span class="step__time">15 минут</span></li>
-				<li class="step card" data-reveal style="--i:2"><span class="step__n">03</span><h3 class="h4">Дизайн и сборка</h3><p class="muted">Первый экран показываю в тот же день. Визитка готова за 1 день, лендинг — за 1–2, многостраничный сайт — за 3–5.</p><span class="step__time">от 1 дня</span></li>
-				<li class="step card" data-reveal style="--i:3"><span class="step__n">04</span><h3 class="h4">Правки и запуск</h3><p class="muted">Вносим правки, вы оплачиваете оставшиеся 50%, я подключаю домен — сайт работает и приводит клиентов.</p><span class="step__time">в день согласования</span></li>
+			<ol class="flow">
+				<li class="flow__step" data-reveal>
+					<div class="flow__head"><span class="flow__n">01</span><div><h3 class="h4">Знакомство и разбор</h3><span class="flow__time">15 минут</span></div></div>
+					<div class="flow__cols">
+						<div><p class="flow__label">Делаем</p><p class="muted">Обсуждаем ваш бизнес, клиентов и конкурентов. Смотрим, где вас уже ищут: Карты, соцсети, поиск.</p></div>
+						<div class="flow__get"><p class="flow__label">Вы получаете</p><p>План сайта: какие блоки нужны и зачем. Фиксированную цену и срок.</p></div>
+					</div>
+				</li>
+				<li class="flow__step" data-reveal>
+					<div class="flow__head"><span class="flow__n">02</span><div><h3 class="h4">Смысл и тексты</h3><span class="flow__time">в день старта</span></div></div>
+					<div class="flow__cols">
+						<div><p class="flow__label">Делаем</p><p class="muted">Формулируем, чем вы лучше других, и выстраиваем путь клиента — от первого экрана до заявки. Пишем тексты.</p></div>
+						<div class="flow__get"><p class="flow__label">Вы получаете</p><p>Структуру и тексты на согласование. На этом шаге вносится предоплата 50%.</p></div>
+					</div>
+				</li>
+				<li class="flow__step" data-reveal>
+					<div class="flow__head"><span class="flow__n">03</span><div><h3 class="h4">Первый экран</h3><span class="flow__time">в тот же день</span></div></div>
+					<div class="flow__cols">
+						<div><p class="flow__label">Делаем</p><p class="muted">Подбираем палитру, шрифты и настроение под вашу нишу.</p></div>
+						<div class="flow__get"><p class="flow__label">Вы получаете</p><p>Готовый первый экран — оцениваете стиль до того, как собран весь сайт. Не понравится — переделаем бесплатно.</p></div>
+					</div>
+				</li>
+				<li class="flow__step" data-reveal>
+					<div class="flow__head"><span class="flow__n">04</span><div><h3 class="h4">Сборка и проверка</h3><span class="flow__time">1–5 дней, по тарифу</span></div></div>
+					<div class="flow__cols">
+						<div><p class="flow__label">Делаем</p><p class="muted">Собираем сайт, проверяем на телефонах, настраиваем заявки, SEO-базу и Яндекс Метрику.</p></div>
+						<div class="flow__get"><p class="flow__label">Вы получаете</p><p>Рабочую ссылку на сайт для проверки и круги правок по тарифу.</p></div>
+					</div>
+				</li>
+				<li class="flow__step" data-reveal>
+					<div class="flow__head"><span class="flow__n">05</span><div><h3 class="h4">Запуск</h3><span class="flow__time">в день согласования</span></div></div>
+					<div class="flow__cols">
+						<div><p class="flow__label">Делаем</p><p class="muted">Подключаем домен, проверяем, что заявки доходят, передаём доступы. Вы оплачиваете оставшиеся 50%.</p></div>
+						<div class="flow__get"><p class="flow__label">Вы получаете</p><p>Работающий сайт, все файлы и доступы — и подсказки, как получать из него больше заявок.</p></div>
+					</div>
+				</li>
 			</ol>
+			<div class="flow__guarantee" data-reveal>
+				<p><svg class="ico"><use href="#i-shield"/></svg><span><b>Гарантия на каждом шаге:</b> не понравится первый экран — переделаем бесплатно, не подошло совсем — вернём предоплату до начала сборки.</span></p>
+				<a class="btn btn--ghost" href="https://t.me/weencult" target="_blank" rel="noopener" data-audit>Начать с бесплатного разбора</a>
+			</div>
 		</div>
 	</section>
 
@@ -391,8 +492,8 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 				<div class="plan card" data-reveal>
 					<p class="plan__name">Визитка</p>
 					<p class="plan__note">Чтобы быстро появиться в сети</p>
-					<p class="plan__price"><small>от</small> 4 990 <span>₽</span></p>
-					<p class="plan__promo">🎁 Первым 5 клиентам — скидка 2 000 ₽ за отзыв</p>
+					<p class="plan__price"><small>от</small> <span data-price="4990" data-split>4 990 <span class="cur">₽</span></span></p>
+					<p class="plan__promo">🎁 Первым 5 клиентам — скидка <span data-price="2000">2 000 ₽</span> за отзыв</p>
 					<p class="plan__term">Срок: 1 день</p>
 					<ul class="plan__list">
 						<li><svg class="ico"><use href="#i-check"/></svg>Одна страница, до 5 блоков</li>
@@ -407,7 +508,7 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 					<span class="tag tag--sm tag--dozaprom plan__flag" style="--r:6deg">⭐ Чаще выбирают</span>
 					<p class="plan__name">Лендинг</p>
 					<p class="plan__note">Чтобы сайт приводил клиентов</p>
-					<p class="plan__price"><small>от</small> 12 990 <span>₽</span></p>
+					<p class="plan__price"><small>от</small> <span data-price="12990" data-split>12 990 <span class="cur">₽</span></span></p>
 					<p class="plan__term">Срок: 1–2 дня</p>
 					<ul class="plan__list">
 						<li><svg class="ico"><use href="#i-check"/></svg>До 10 блоков: услуги, работы, отзывы, FAQ</li>
@@ -422,8 +523,8 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 				<div class="plan card" data-reveal style="--i:2">
 					<p class="plan__name">Под ключ</p>
 					<p class="plan__note">Чтобы закрыть вопрос с сайтом целиком</p>
-					<p class="plan__price"><small>от</small> 29 990 <span>₽</span></p>
-					<p class="plan__term">Срок: 3–5 дней</p>
+					<p class="plan__price plan__price--text">Индивидуально</p>
+					<p class="plan__term">Цена — после бесплатного разбора · срок 3–5 дней</p>
 					<ul class="plan__list">
 						<li><svg class="ico"><use href="#i-check"/></svg>Несколько страниц</li>
 						<li><svg class="ico"><use href="#i-check"/></svg>Уникальный дизайн каждой страницы</li>
@@ -432,14 +533,16 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 						<li><svg class="ico"><use href="#i-check"/></svg>Регистрирую домен и хостинг за вас</li>
 						<li><svg class="ico"><use href="#i-check"/></svg>2 недели поддержки</li>
 					</ul>
-					<a class="btn btn--ghost btn--block" href="#contact" data-plan="Под ключ">Выбрать «Под ключ»</a>
+					<a class="btn btn--ghost btn--block" href="#contact" data-plan="Под ключ">Получить расчёт</a>
 				</div>
 			</div>
+
+			<p class="price-note" data-price-note hidden></p>
 
 			<div class="terms">
 				<div class="term" data-reveal>
 					<span class="term__ico"><svg class="ico"><use href="#i-card"/></svg></span>
-					<div><h3 class="h4">Оплата 50 / 50</h3><p class="muted">50% — после брифа, 50% — после согласования готового сайта. Перевод по СБП.</p></div>
+					<div><h3 class="h4">Оплата 50 / 50</h3><p class="muted">50% — после брифа, 50% — после согласования готового сайта. Перевод по СБП, на каждую оплату — чек самозанятого.</p></div>
 				</div>
 				<div class="term" data-reveal style="--i:1">
 					<span class="term__ico"><svg class="ico"><use href="#i-shield"/></svg></span>
@@ -450,22 +553,25 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 					<div><h3 class="h4">От чего растёт цена</h3><p class="muted">Больше блоков, каталог, онлайн-запись, тексты с нуля или срочность. Итоговую цену называю после брифа.</p></div>
 				</div>
 			</div>
-			<p class="terms__note" data-reveal>Домен и хостинг оплачиваются отдельно — примерно 1 000–2 500 ₽ в год. В тарифе «Под ключ» регистрирую и настраиваю их за вас.</p>
+			<p class="terms__note" data-reveal>Домен и хостинг оплачиваются отдельно — примерно <span data-price-range="1000-2500">1 000–2 500 ₽</span> в год. В тарифе «Под ключ» регистрирую и настраиваю их за вас.</p>
 
 			<div class="extras card" data-reveal>
 				<div class="extras__head">
 					<h3 class="h3">Дополнительно</h3>
 					<p class="muted">Можно добавить к любому тарифу — сразу или потом.</p>
 				</div>
-				<ul class="extras__list">
-					<li><span>Дополнительная страница</span><b>от 1 990 ₽</b></li>
-					<li><span>Онлайн-запись (YCLIENTS, Яндекс)</span><b>от 2 990 ₽</b></li>
-					<li><span>Карта и карточка в Яндекс Бизнесе</span><b>от 990 ₽</b></li>
-					<li><span>Квиз или калькулятор стоимости</span><b>от 2 990 ₽</b></li>
-					<li><span>Логотип</span><b>от 2 990 ₽</b></li>
-					<li><span>Перенос старого сайта</span><b>от 3 990 ₽</b></li>
-					<li><span>Поддержка и правки</span><b>от 1 990 ₽/мес</b></li>
-				</ul>
+				<div class="extras__body">
+					<ul class="extras__tags">
+						<li>Дополнительные страницы</li>
+						<li>Онлайн-запись (YCLIENTS, Яндекс)</li>
+						<li>Карта и Яндекс Бизнес</li>
+						<li>Квиз или калькулятор стоимости</li>
+						<li>Логотип</li>
+						<li>Перенос старого сайта</li>
+						<li>Поддержка и правки</li>
+					</ul>
+					<p class="extras__note">Стоимость посчитаю под вашу задачу — назову после короткого разбора, бесплатно.</p>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -481,10 +587,10 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 			<div class="faq" data-reveal style="--i:1">
 				<details class="faq__item" open><summary>Почему так быстро и недорого?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Отлаженный процесс и современные инструменты: рутину — заготовки вёрстки, подбор вариантов, проверку адаптива — делаю с помощью AI. Дизайн, тексты и каждую деталь проверяю вручную. Вы платите за результат, а не за часы рутины.</p></details>
 				<details class="faq__item"><summary>Что от меня нужно?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Название, чем занимаетесь, услуги и цены, контакты. Логотип и фото — если есть. Если фото нет, подберу качественные изображения под вашу нишу.</p></details>
-				<details class="faq__item"><summary>Как проходит оплата?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">50% предоплаты после брифа, когда цена и срок зафиксированы, и 50% — после того, как вы согласовали готовый сайт. Перевод по СБП.</p></details>
+				<details class="faq__item"><summary>Как проходит оплата?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">50% предоплаты после брифа, когда цена и срок зафиксированы, и 50% — после того, как вы согласовали готовый сайт. Перевод по СБП. Работаем официально: на каждую оплату вы получаете чек самозанятого.</p></details>
 				<details class="faq__item"><summary>А если мне не понравится?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Первый экран показываю в тот же день — если не понравится, переделаю бесплатно. Если поймёте, что сайт не нужен совсем, верну предоплату до начала сборки.</p></details>
 				<details class="faq__item"><summary>А если потом нужно что-то поменять?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Просто напишите — правки текста, цен или фото вношу за минуты. Сайт лёгкий и без сложных систем, поэтому быстро грузится и не ломается от обновлений.</p></details>
-				<details class="faq__item"><summary>Сколько стоят домен и хостинг?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Оплачиваются отдельно, напрямую провайдеру, — примерно 1 000–2 500 ₽ в год. Домен оформляется на вас, все файлы и доступы передаю — сайт полностью ваш, без подписок и привязки ко мне.</p></details>
+				<details class="faq__item"><summary>Сколько стоят домен и хостинг?<span class="faq__pm" aria-hidden="true"><svg class="ico"><use href="#i-plus"/></svg></span></summary><p class="muted">Оплачиваются отдельно, напрямую провайдеру, — примерно <span data-price-range="1000-2500">1 000–2 500 ₽</span> в год. Домен оформляется на вас, все файлы и доступы передаю — сайт полностью ваш, без подписок и привязки ко мне.</p></details>
 			</div>
 		</div>
 	</section>
@@ -533,6 +639,12 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 						<span class="reach__value">kiashe.cult<wbr>@gmail.com</span>
 						<svg class="ico reach__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
 					</a>
+					<a class="reach__small reach__small--vk" href="https://vk.ru/club242401122" target="_blank" rel="noopener" data-reveal style="--i:4">
+						<span class="reach__ico"><svg class="ico"><use href="#i-vk"/></svg></span>
+						<span class="reach__label">ВКонтакте</span>
+						<span class="reach__value">Kiashe Studio</span>
+						<svg class="ico reach__arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+					</a>
 				</div>
 
 				<form class="callback" data-form novalidate data-reveal>
@@ -574,8 +686,9 @@ try { if (localStorage.getItem('announce-hidden')) document.documentElement.clas
 			<a href="https://web.max.ru/" target="_blank" rel="noopener" data-max>MAX</a>
 			<a href="mailto:kiashe.cult@gmail.com" data-mail>kiashe.cult@gmail.com</a>
 			<a href="tel:+79308392105">+7 930 839-21-05</a>
+			<a href="https://vk.ru/club242401122" target="_blank" rel="noopener">ВКонтакте</a>
 		</div>
-		<p class="footer__copy">© <span data-year>2026</span> Kiashe Studio · <a href="privacy.html">Политика конфиденциальности</a></p>
+		<p class="footer__copy">© <span data-year>2026</span> Kiashe Studio · <span class="footer__req">Самозанятый Акимов Арсений Александрович, ИНН 333411864948</span> · <a href="privacy.html">Политика конфиденциальности</a></p>
 	</div>
 </footer>
 

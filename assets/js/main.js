@@ -11,6 +11,10 @@
 	// Пока пусто — форма шлёт на send.php (если он есть) или открывает Telegram с готовым текстом
 	const FORM_KEY = 'b8a90705-7ad0-4ce5-b5ce-783d55390d42';
 
+	// язык и валюта посетителя (assets/js/i18n.js); L(ru, en) — строка на текущем языке
+	const I18N = window.I18N;
+	const L = (ru, en) => I18N.t(ru, en);
+
 	const $ = (s, root = document) => root.querySelector(s);
 	const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 	const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,16 +52,14 @@
 
 	/* ---------- Статус «на связи» по московскому времени ---------- */
 
-	(() => {
+	function renderStatus() {
 		const el = $('[data-status]');
-		const h = (new Date().getUTCHours() + 3) % 24;
-		if (h >= 9 && h < 21) {
-			$('[data-status-text]', el).textContent = 'Сейчас на связи · отвечу за 15 минут';
-		} else {
-			el.classList.add('is-off');
-			$('[data-status-text]', el).textContent = 'Сейчас не на связи · отвечу с 9:00 МСК';
-		}
-	})();
+		const on = (h => h >= 9 && h < 21)((new Date().getUTCHours() + 3) % 24);
+		el.classList.toggle('is-off', !on);
+		$('[data-status-text]', el).textContent = on
+			? L('Сейчас на связи · отвечу за 15 минут', 'Online now · reply within 15 minutes')
+			: L('Сейчас не на связи · отвечу с 9:00 МСК', 'Offline now · back at 9:00 Moscow time');
+	}
 
 	/* ---------- MAX: чат по ссылке профиля или поиск по номеру ---------- */
 
@@ -65,7 +67,7 @@
 		if (MAX) { a.href = MAX; return; }
 		a.addEventListener('click', () => {
 			copy(PHONE);
-			toast('Номер скопирован — вставьте его в поиск MAX');
+			toast(L('Номер скопирован — вставьте его в поиск MAX', 'Number copied — paste it into MAX search'));
 		});
 	});
 
@@ -97,7 +99,7 @@
 
 	function setMenu(open) {
 		burger.setAttribute('aria-expanded', open);
-		burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+		burger.setAttribute('aria-label', open ? L('Закрыть меню', 'Close menu') : L('Открыть меню', 'Open menu'));
 		menu.classList.toggle('is-open', open);
 		nav.classList.toggle('menu-open', open);
 	}
@@ -145,7 +147,7 @@
 			});
 		});
 	}, { rootMargin: '0px 0px -8% 0px' });
-	$$('[data-reveal], [data-steps]').forEach((el) => {
+	$$('[data-reveal]').forEach((el) => {
 		if (!el.closest('.hero')) revealIO.observe(el);
 	});
 	// счётчики на первом экране стартуют вместе с его анимацией
@@ -316,7 +318,9 @@
 			if (ready.length) shatter(ready[Math.random() * ready.length | 0]);
 		}, 4200);
 	}
-	if (!finePointer) $('[data-hint]').textContent = 'Нажмите на плашки 👆';
+	const renderHint = () => {
+		$('[data-hint]').textContent = finePointer ? L('Наведите на плашки 👆', 'Hover over the tags 👆') : L('Нажмите на плашки 👆', 'Tap the tags 👆');
+	};
 
 	/* ---------- Лайтбокс ---------- */
 
@@ -428,17 +432,23 @@
 	// vars: фон, текст, акцент, приглушённый текст, карточки, шрифт, регистр, текст кнопки, скругление
 	const THEMES = {
 		coffee: { label: 'Кофейня', font: 'Lora', vars: ['#1c1411', '#f3e9dc', '#c8a165', 'rgba(243,233,220,.62)', 'rgba(255,255,255,.05)', SERIF, 'none', '#1c1411', '4px'],
-			eyebrow: 'Кофейня в центре города', title: 'Кофе, который хочется повторить', sub: 'Обжариваем сами, варим медленно. Заходите на пять минут — оставайтесь на час.', btn: 'Забронировать столик', emoji: '☕', cards: ['Меню', 'Атмосфера', 'Как добраться'] },
+			eyebrow: 'Кофейня в центре города', title: 'Кофе, который хочется повторить', sub: 'Обжариваем сами, варим медленно. Заходите на пять минут — оставайтесь на час.', btn: 'Забронировать столик', emoji: '☕', cards: ['Меню', 'Атмосфера', 'Как добраться'],
+			en: { label: 'Coffee shop', eyebrow: 'Coffee shop in the city center', title: 'Coffee you’ll want again', sub: 'We roast our own and brew it slow. Drop in for five minutes — stay for an hour.', btn: 'Book a table', cards: ['Menu', 'Atmosphere', 'How to get here'] } },
 		beauty: { label: 'Салон красоты', font: 'Lora', vars: ['#fbf1f1', '#2b1b1e', '#d4577a', 'rgba(43,27,30,.62)', 'rgba(212,87,122,.08)', SERIF, 'none', '#fff', '999px'],
-			eyebrow: 'Салон красоты', title: 'Красота без спешки и очередей', sub: 'Маникюр, брови и уход у мастеров, к которым возвращаются. Запись онлайн за минуту.', btn: 'Записаться', emoji: '💅', cards: ['Услуги', 'Мастера', 'Цены'] },
+			eyebrow: 'Салон красоты', title: 'Красота без спешки и очередей', sub: 'Маникюр, брови и уход у мастеров, к которым возвращаются. Запись онлайн за минуту.', btn: 'Записаться', emoji: '💅', cards: ['Услуги', 'Мастера', 'Цены'],
+			en: { label: 'Beauty salon', eyebrow: 'Beauty salon', title: 'Beauty without rush or queues', sub: 'Manicure, brows and skincare from masters clients come back to. Book online in a minute.', btn: 'Book now', cards: ['Services', 'Masters', 'Prices'] } },
 		wood: { label: 'Мастерская', font: 'Lora', vars: ['#f4efe6', '#2a211b', '#c4622d', 'rgba(42,33,27,.62)', 'rgba(42,33,27,.05)', SERIF, 'none', '#fff', '999px'],
-			eyebrow: 'Столярная мастерская', title: 'Мебель из массива по вашим размерам', sub: 'Дуб, ясень и сосна. От разделочной доски до лестницы — своими руками.', btn: 'Рассчитать стоимость', emoji: '🪵', cards: ['Работы', 'Процесс', 'Цены'] },
+			eyebrow: 'Столярная мастерская', title: 'Мебель из массива по вашим размерам', sub: 'Дуб, ясень и сосна. От разделочной доски до лестницы — своими руками.', btn: 'Рассчитать стоимость', emoji: '🪵', cards: ['Работы', 'Процесс', 'Цены'],
+			en: { label: 'Workshop', eyebrow: 'Joinery workshop', title: 'Solid wood furniture made to your size', sub: 'Oak, ash and pine. From a cutting board to a staircase — all handmade.', btn: 'Get a quote', cards: ['Works', 'Process', 'Prices'] } },
 		law: { label: 'Юрист', font: 'Lora', vars: ['#f3f0ea', '#1d1b19', '#7a2333', 'rgba(29,27,25,.6)', 'rgba(122,35,51,.06)', SERIF, 'none', '#fff', '2px'],
-			eyebrow: 'Юридическая практика', title: 'Защищаю бизнес в суде и на переговорах', sub: 'Понятная стратегия на первой встрече — без юридической латыни.', btn: 'Записаться на консультацию', emoji: '⚖️', cards: ['Практика', 'Опыт', 'Стоимость'] },
+			eyebrow: 'Юридическая практика', title: 'Защищаю бизнес в суде и на переговорах', sub: 'Понятная стратегия на первой встрече — без юридической латыни.', btn: 'Записаться на консультацию', emoji: '⚖️', cards: ['Практика', 'Опыт', 'Стоимость'],
+			en: { label: 'Lawyer', eyebrow: 'Legal practice', title: 'I defend businesses in court and in negotiations', sub: 'A clear strategy at the first meeting — no legal jargon.', btn: 'Book a consultation', cards: ['Practice', 'Experience', 'Fees'] } },
 		club: { label: 'Компьютерный клуб', font: 'Oswald', vars: ['#0f0a0d', '#fff', '#ff2e4d', 'rgba(255,255,255,.62)', 'rgba(255,46,77,.08)', NARROW, 'uppercase', '#fff', '0px'],
-			eyebrow: 'Компьютерный клуб 24/7', title: 'Новый уровень игры', sub: 'Топовое железо, мониторы 240 Гц и турниры каждые выходные.', btn: 'Забронировать место', emoji: '🎮', cards: ['Арена', 'Цены', 'Турниры'] },
+			eyebrow: 'Компьютерный клуб 24/7', title: 'Новый уровень игры', sub: 'Топовое железо, мониторы 240 Гц и турниры каждые выходные.', btn: 'Забронировать место', emoji: '🎮', cards: ['Арена', 'Цены', 'Турниры'],
+			en: { label: 'Gaming club', eyebrow: 'Gaming club 24/7', title: 'The next level of gaming', sub: 'Top-tier hardware, 240 Hz monitors and tournaments every weekend.', btn: 'Book a seat', cards: ['Arena', 'Prices', 'Tournaments'] } },
 		factory: { label: 'Производство', font: 'Oswald', vars: ['#15171a', '#f2f2f2', '#f5b301', 'rgba(242,242,242,.6)', 'rgba(255,255,255,.05)', NARROW, 'uppercase', '#15171a', '0px'],
-			eyebrow: 'Собственное производство', title: 'Оборудование напрямую от завода', sub: 'Проектируем, собираем и запускаем линии под ваш процесс — без посредников.', btn: 'Получить расчёт', emoji: '🏭', cards: ['Оборудование', 'Гарантия', 'Контакты'] }
+			eyebrow: 'Собственное производство', title: 'Оборудование напрямую от завода', sub: 'Проектируем, собираем и запускаем линии под ваш процесс — без посредников.', btn: 'Получить расчёт', emoji: '🏭', cards: ['Оборудование', 'Гарантия', 'Контакты'],
+			en: { label: 'Manufacturing', eyebrow: 'In-house manufacturing', title: 'Equipment direct from the factory', sub: 'We design, build and launch lines for your process — no middlemen.', btn: 'Get a quote', cards: ['Equipment', 'Warranty', 'Contacts'] } }
 	};
 	const VARS = ['--m-bg', '--m-fg', '--m-ac', '--m-mu', '--m-card', '--m-font', '--m-tt', '--m-btn-fg', '--m-r'];
 	const TRANSLIT = { а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'c', ч: 'ch', ш: 'sh', щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya' };
@@ -454,16 +464,17 @@
 		const n = nameIn.value.trim();
 		const slug = [...n.toLowerCase()].map((c) => TRANSLIT[c] ?? c).join('')
 			.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24);
-		T.logo.textContent = n || 'Ваш бизнес';
-		T.url.textContent = (slug || 'vash-biznes') + '.ru';
-		T['cta-label'].textContent = n ? `Хочу такой сайт для «${n}»` : 'Хочу такой сайт';
+		T.logo.textContent = n || L('Ваш бизнес', 'Your business');
+		T.url.textContent = (slug || L('vash-biznes', 'your-business')) + L('.ru', '.com');
+		T['cta-label'].textContent = n ? L(`Хочу такой сайт для «${n}»`, `I want a site like this for “${n}”`) : L('Хочу такой сайт', 'I want a site like this');
 	}
 
 	function setTheme(key, animate) {
 		const th = THEMES[theme = key];
+		const tx = I18N.lang === 'en' ? { ...th, ...th.en } : th;
 		th.vars.forEach((v, i) => mock.style.setProperty(VARS[i], v));
-		['eyebrow', 'title', 'sub', 'btn', 'emoji', 'font'].forEach((k) => { T[k].textContent = th[k]; });
-		th.cards.forEach((c, i) => { T['c' + (i + 1)].textContent = c; });
+		['eyebrow', 'title', 'sub', 'btn', 'emoji', 'font'].forEach((k) => { T[k].textContent = tx[k]; });
+		tx.cards.forEach((c, i) => { T['c' + (i + 1)].textContent = c; });
 		$$('i', T.swatches).forEach((sw, i) => { sw.style.background = th.vars[[0, 2, 1][i]]; });
 		niches.forEach((b) => {
 			const on = b.dataset.niche === key;
@@ -479,7 +490,6 @@
 
 	niches.forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.niche, true)));
 	nameIn.addEventListener('input', setName);
-	setTheme(theme);
 
 	/* ---------- Выбор почты ---------- */
 
@@ -493,7 +503,7 @@
 		mailru: (s, b) => `https://e.mail.ru/compose/?to=${EMAIL}&subject=${q(s)}&body=${q(b)}`
 	};
 
-	function openMail(subject = 'Хочу сайт', body = 'Здравствуйте, Арсений! ') {
+	function openMail(subject = L('Хочу сайт', 'I’d like a website'), body = L('Здравствуйте, Арсений! ', 'Hi Arseniy! ')) {
 		$$('[data-mail-via]', mailbox).forEach((el) => {
 			const url = MAIL_URLS[el.dataset.mailVia];
 			if (url) el.href = url(subject, body);
@@ -512,7 +522,7 @@
 		if (!item) return;
 		if (item.dataset.mailVia === 'copy') {
 			await copy(EMAIL);
-			toast(`Адрес ${EMAIL} скопирован`);
+			toast(L(`Адрес ${EMAIL} скопирован`, `${EMAIL} copied`));
 		}
 		mailbox.close();
 	});
@@ -527,21 +537,27 @@
 	// выбор из примерки и тарифов попадает в текст для Telegram и в заявку
 	function tgText() {
 		const { biz, plan } = form.elements;
-		return 'Здравствуйте, Арсений! Хочу сайт' +
-			(biz.value ? ` для: ${biz.value}` : '') +
-			(plan.value ? `. Тариф — «${plan.value}»` : '') + '.';
+		const planName = I18N.tr(plan.value);
+		return L('Здравствуйте, Арсений! Хочу сайт', 'Hi Arseniy! I’d like a website') +
+			(biz.value ? L(` для: ${biz.value}`, ` for: ${biz.value}`) : '') +
+			(plan.value ? L(`. Тариф — «${planName}»`, `. Plan — “${planName}”`) : '') + '.';
 	}
 	const syncTg = () => { tgMain.href = `${TG}?text=${encodeURIComponent(tgText())}`; };
+	// «бесплатный разбор»: Telegram с заготовкой, клиенту остаётся вставить ссылку
+	const syncAudit = () => {
+		const text = L('Здравствуйте! Хочу бесплатный разбор. Вот ссылка: ', 'Hi! I’d like a free review. Here’s the link: ');
+		$$('[data-audit]').forEach((a) => { a.href = `${TG}?text=${encodeURIComponent(text)}`; });
+	};
 	T.cta.addEventListener('click', () => {
 		const n = nameIn.value.trim();
-		form.elements.biz.value = THEMES[theme].label + (n ? ` «${n}»` : '');
+		const th = THEMES[theme];
+		form.elements.biz.value = (I18N.lang === 'en' ? th.en.label : th.label) + (n ? ` «${n}»` : '');
 		syncTg();
 	});
 	$$('[data-plan]').forEach((a) => a.addEventListener('click', () => {
 		form.elements.plan.value = a.dataset.plan;
 		syncTg();
 	}));
-	syncTg();
 
 	function say(text, ok, link) {
 		formMsg.textContent = text;
@@ -559,24 +575,26 @@
 			return wrong;
 		});
 		if (bad.length) {
-			say(bad.length === 1 && bad[0] === 'consent' ? 'Отметьте согласие на обработку данных.' : 'Укажите имя и телефон или ник в Telegram.');
+			say(bad.length === 1 && bad[0] === 'consent'
+				? L('Отметьте согласие на обработку данных.', 'Please tick the consent box.')
+				: L('Укажите имя и телефон или ник в Telegram.', 'Please enter your name and a phone number or Telegram username.'));
 			f[bad[0]].focus();
 			return;
 		}
 
-		const text = `${tgText()}\nМеня зовут: ${f.name.value.trim()}\nКонтакт: ${f.contact.value.trim()}`;
+		const text = `${tgText()}\n${L('Меня зовут', 'My name is')}: ${f.name.value.trim()}\n${L('Контакт', 'Contact')}: ${f.contact.value.trim()}`;
 		const tgLink = `${TG}?text=${encodeURIComponent(text)}`;
 
 		// без сервера и ключа (например, GitHub Pages) — сразу Telegram с готовым текстом
 		if (!FORM_KEY && !form.getAttribute('action')) {
 			open(tgLink, '_blank', 'noopener');
 			copy(text);
-			say('Открываю Telegram — текст заявки уже набран, осталось нажать «Отправить».', true);
+			say(L('Открываю Telegram — текст заявки уже набран, осталось нажать «Отправить».', 'Opening Telegram — your message is ready, just press “Send”.'), true);
 			return;
 		}
 
 		submitBtn.disabled = true;
-		say('Отправляю…', true);
+		say(L('Отправляю…', 'Sending…'), true);
 		try {
 			const res = FORM_KEY
 				? await fetch('https://api.web3forms.com/submit', {
@@ -590,6 +608,7 @@
 						'Контакт': f.contact.value.trim(),
 						'Бизнес': f.biz.value || 'не указан',
 						'Тариф': f.plan.value || 'Пока не знаю',
+						'Язык и валюта': `${I18N.lang.toUpperCase()}, ${I18N.cur} · страна ${I18N.country}`,
 						botcheck: f.website.value
 					})
 				})
@@ -598,14 +617,27 @@
 			if (!(data.ok || data.success)) throw new Error(data.error || data.message);
 			f.name.value = f.contact.value = '';
 			f.consent.checked = false;
-			say('Заявка у меня! Отвечу в течение 15 минут в рабочее время (9:00–21:00 МСК).', true);
+			say(L('Заявка у меня! Отвечу в течение 15 минут в рабочее время (9:00–21:00 МСК).', 'Got it! We’ll reply within 15 minutes during working hours (9:00–21:00 Moscow time).'), true);
 		} catch {
 			// отправка не удалась — не теряем клиента: тот же текст можно отправить в Telegram
-			say('Не получилось отправить напрямую.', false, { href: tgLink, text: 'Отправить в Telegram →' });
+			say(L('Не получилось отправить напрямую.', 'Couldn’t send it directly.'), false, { href: tgLink, text: L('Отправить в Telegram →', 'Send via Telegram →') });
 		} finally {
 			submitBtn.disabled = false;
 		}
 	});
 
 	$$('input', form).forEach((i) => i.addEventListener(i.type === 'checkbox' ? 'change' : 'input', () => i.closest('.field')?.classList.remove('is-error')));
+
+	/* ---------- Язык и валюта ---------- */
+
+	I18N.onChange(() => {
+		renderStatus();
+		renderHint();
+		setTheme(theme);
+		setName();
+		syncTg();
+		syncAudit();
+		formMsg.textContent = '';
+	});
+	I18N.start();
 })();
