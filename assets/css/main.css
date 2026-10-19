@@ -1156,6 +1156,11 @@ p { margin: 0; }
 	letter-spacing: -.035em;
 	white-space: nowrap;
 }
+/* старая цена со скидкой */
+.plan__old { display: flex; align-items: center; gap: 10px; margin-top: 24px; font-family: var(--f-display); font-size: 22px; color: var(--mist); }
+.plan__old s { text-decoration-thickness: 2px; text-decoration-color: #ff7a6b; }
+.plan__off { padding: 4px 10px; border-radius: 999px; background: rgba(255, 68, 51, .14); font-family: var(--f-body); font-size: 14px; font-weight: 600; color: #ff7a6b; }
+.plan__old + .plan__price { margin-top: 6px; }
 .plan__price--text { font-size: 40px; letter-spacing: -.03em; }
 .plan__price small { font-size: 18px; font-weight: 500; letter-spacing: 0; color: var(--mist); }
 .plan__price .cur { font-size: 34px; color: var(--mist); }
