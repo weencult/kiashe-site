@@ -1046,6 +1046,50 @@ p { margin: 0; }
 .audit__title { font-family: var(--f-display); font-weight: 600; font-size: 28px; letter-spacing: -.02em; }
 .audit .muted { max-width: 64ch; margin-top: 8px; }
 
+/* цифры: что даёт сайт */
+.stats-head { margin-top: var(--band); }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.stat { padding: var(--pad); }
+.stat__n {
+	font-family: var(--f-display);
+	font-weight: 600;
+	font-size: clamp(44px, 4.4vw, 60px);
+	line-height: 1;
+	letter-spacing: -.04em;
+	white-space: nowrap;
+	background: linear-gradient(90deg, #fff, var(--sky));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+.stat .muted { margin-top: 16px; font-size: 15px; }
+.stats__src { margin-top: 20px; font-size: 13px; color: var(--mist); }
+.stats__src a { color: var(--fog); }
+
+/* отзывы — пока честная заглушка */
+.reviews {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 16px 32px;
+	margin-top: calc(var(--gap) * 2);
+	padding: 28px 32px;
+}
+.reviews__stars { font-size: 26px; letter-spacing: 4px; color: #f5b301; }
+.reviews .muted { max-width: 72ch; margin-top: 6px; font-size: 15px; }
+
+/* сравнение: сами / фрилансер / студия / мы */
+.compare { margin-top: calc(var(--gap) * 2); }
+.compare .h3 { margin-bottom: 24px; }
+.compare__scroll { overflow-x: auto; border: 1px solid var(--steel); border-radius: var(--r-card); }
+.compare__table { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px; }
+.compare__table th, .compare__table td { padding: 14px 18px; border-bottom: 1px solid var(--steel); text-align: left; vertical-align: top; color: var(--fog); }
+.compare__table tbody tr:last-child > * { border-bottom: 0; }
+.compare__table thead th { font-weight: 600; font-size: 14px; color: #fff; }
+.compare__table tbody th { font-weight: 400; color: var(--mist); }
+.compare__table .compare__us { background: rgba(28, 108, 255, .14); color: #fff; font-weight: 500; }
+.compare__table thead .compare__us { background: var(--blue); }
+
 /* ---------- Как работаем ---------- */
 
 .flow { display: grid; gap: var(--gap); margin: 0; padding: 0; list-style: none; }
@@ -1175,20 +1219,94 @@ p { margin: 0; }
 	font-weight: 400;
 	color: #5be38c;
 }
-.plan__list {
-	flex: 1;
-	margin: 28px 0 32px;
-	padding: 24px 0 0;
-	border-top: 1px solid var(--steel);
+/* карточка тарифа: номер-водяной знак, список с «+», цена и ноутбук внизу */
+.plan { overflow: hidden; background: radial-gradient(120% 60% at 100% 100%, rgba(28, 108, 255, .16), transparent 60%), var(--deep); }
+.plan--featured { overflow: visible; background: radial-gradient(120% 60% at 100% 100%, rgba(0, 172, 254, .2), transparent 60%), var(--indigo); }
+.plan__num {
+	position: absolute;
+	top: 6px;
+	right: 18px;
+	z-index: 0;
+	font-family: var(--f-display);
+	font-weight: 800;
+	font-size: 120px;
+	line-height: 1;
+	letter-spacing: -.04em;
+	color: transparent;
+	-webkit-text-stroke: 1px rgba(255, 255, 255, .09);
+	pointer-events: none;
+	user-select: none;
+}
+.plan > :not(.plan__num, .plan__flag) { position: relative; z-index: 1; }
+.plan__list { margin: 26px 0 0; padding: 0; list-style: none; }
+.plan__list li { position: relative; padding: 6px 0 6px 26px; font-size: 15px; line-height: 1.45; color: var(--fog); }
+.plan__list li::before {
+	content: "+";
+	position: absolute;
+	left: 2px;
+	top: 4px;
+	font-family: var(--f-display);
+	font-weight: 600;
+	font-size: 19px;
+	color: var(--sky);
+}
+.plan > .plan__list li:first-child { color: #fff; }
+.plan__more { flex: 1; margin-top: 4px; }
+.plan__more .plan__list { margin-top: 0; }
+.plan__more summary {
+	display: inline-block;
+	padding: 6px 0 6px 26px;
+	font-size: 14px;
+	color: var(--mist);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
 	list-style: none;
 }
-.plan__list li { display: flex; gap: 12px; padding: 7px 0; font-size: 15px; line-height: 1.45; color: var(--fog); }
-.plan__list .ico { width: 18px; height: 18px; margin-top: 1px; color: var(--lime); }
+.plan__more summary::-webkit-details-marker { display: none; }
+.plan__more summary:hover { color: #fff; }
+.plan__more-hide, .plan__more[open] .plan__more-show { display: none; }
+.plan__more[open] .plan__more-hide { display: inline; }
+.plan__foot { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--steel); }
+.plan__foot .plan__old, .plan__foot > .plan__price:first-child { margin-top: 0; }
+.plan__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: 24px; }
+.plan__go { min-height: 48px; padding: 8px 8px 8px 22px; border-radius: 999px; }
+.plan__go .btn__ico { width: 32px; height: 32px; border-radius: 50%; }
+.btn--white .btn__ico { background: var(--canvas); color: #fff; }
 
-/* условия: оплата, гарантия, цена */
+/* ноутбук со скриншотом работы */
+.laptop {
+	flex-shrink: 0;
+	width: 132px;
+	margin: 0 -10px calc(var(--pad) * -1 + 2px) 0;
+	transform: rotate(-6deg) translateY(4px);
+	transition: transform .4s var(--ease);
+}
+.plan:hover .laptop { transform: rotate(-3deg) translateY(-2px); }
+.laptop__screen {
+	display: block;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border: 4px solid #1a1f29;
+	border-bottom-width: 6px;
+	border-radius: 7px 7px 0 0;
+	background: #000;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .45);
+}
+.laptop__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.laptop::after {
+	content: "";
+	display: block;
+	height: 7px;
+	margin: 0 -12px;
+	border-radius: 0 0 8px 8px;
+	background: linear-gradient(#e3e6eb, #8d939c);
+}
+
+/* условия: оплата, правки, поддержка, права */
 .terms {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: var(--gap);
 	margin-top: calc(var(--gap) * 2);
 }
@@ -1214,7 +1332,18 @@ p { margin: 0; }
 .term__ico .ico { width: 22px; height: 22px; }
 .price-note { margin-top: 28px; font-size: 14px; color: var(--mist); text-align: center; }
 .price-note[hidden] { display: none; }
-.terms__note { margin-top: 20px; font-size: 14px; color: var(--mist); text-align: center; }
+/* что не входит и от чего растёт цена */
+.excl {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px 48px;
+	margin-top: var(--gap);
+	padding: 24px 28px;
+	border: 1px dashed rgba(255, 255, 255, .16);
+	border-radius: 20px;
+}
+.excl__title { font-weight: 600; font-size: 15px; color: #fff; }
+.excl .muted { margin-top: 6px; font-size: 14px; }
 
 /* дополнительные услуги */
 .extras {
@@ -1746,7 +1875,8 @@ p { margin: 0; }
 	.try__facts { margin-top: 0; }
 	.mock { transform: none; }
 
-	.services, .pains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.services, .pains, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.reviews { grid-template-columns: minmax(0, 1fr); }
 	.crew, .audit, .flow__step { grid-template-columns: minmax(0, 1fr); }
 
 	.plans { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
@@ -1815,7 +1945,9 @@ p { margin: 0; }
 	.ticker { padding: 14px 0; }
 	.ticker span { gap: 20px; padding-right: 20px; font-size: 18px; }
 
-	.works, .services, .pains, .flow__cols { grid-template-columns: minmax(0, 1fr); }
+	.works, .services, .pains, .flow__cols, .excl { grid-template-columns: minmax(0, 1fr); }
+	.reviews { padding: 24px var(--pad); }
+	.compare__table { font-size: 14px; }
 	.flow__get { padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--steel); }
 	.audit { padding: 24px var(--pad); border-radius: 22px; }
 	.audit__title { font-size: 23px; }
